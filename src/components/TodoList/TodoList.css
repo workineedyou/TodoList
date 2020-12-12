@@ -1,3 +1,5 @@
-.todoList {
-    list-style: none;
+.flexed {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

@@ -8,7 +8,7 @@ const TodoListItem = ({ label, important = false }) => {
         fontWeight: important ? 600 : 400
     }
 
-    return <div style={ styles }>{ label }</div>
+    return <div className="pointer" style={ styles }>{ label }</div>
 }
 
 export default TodoListItem
