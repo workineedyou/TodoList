@@ -1,3 +1,18 @@
 .pointer {
     cursor: pointer;
+    width: 50%;
+}
+
+.line-through {
+    text-decoration: line-through;
+}
+
+.important-text {
+    color: #f85a3e;
+    font-weight: bold;
+}
+
+.flexy {
+    display: flex;
+    justify-content: space-between;
 }
