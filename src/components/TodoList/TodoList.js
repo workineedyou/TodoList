@@ -4,6 +4,8 @@ import './TodoList.css'
 
 const TodoList = ({ todos, onDelete }) => {
 
+    // console.log(todos)
+
     let elementsItems = todos.map(item => {
         return (
             <li key={ item.id } className="list-group-item">

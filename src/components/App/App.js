@@ -22,15 +22,23 @@ class App extends React.Component {
 
     addSomeItem = (text) => {
 
-        // let obj = { id: this.id++, label: text, important: false }
+        let obj = { id: this.id++, label: text, important: false }
 
+        this.setState(prevState => {
+
+            const newArr = [ ...prevState.todoData, obj]
+
+            return {
+                todoData: newArr
+            }
+        })
     }
 
     deleteItem = (id) => {
 
         this.setState(prevState => {
 
-            const newState = prevState.todoData.filter(item => item.id != id)
+            const newState = prevState.todoData.filter(item => item.id !== id)
 
             return {
                 todoData: newState
