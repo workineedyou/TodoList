@@ -16,7 +16,9 @@ class AddItemForm extends React.Component {
 
         e.preventDefault()
 
-        this.props.addSomeItem(this.state.searchText)
+        if (this.state.searchText) {
+            this.props.addSomeItem(this.state.searchText)
+        }
 
         this.setState({
             searchText: ''

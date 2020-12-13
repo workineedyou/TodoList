@@ -16,7 +16,8 @@ class App extends React.Component {
             { id: 2, label: 'Do something', important: false, done: false },
             { id: 3, label: 'Go to sleep', important: false, done: false },
         ],
-        isLoading: true
+        isLoading: true,
+        keyword: ''
     }
 
     componentDidMount() {
@@ -92,7 +93,23 @@ class App extends React.Component {
         })
     }
 
+    setKeyword = (text) => {
+        this.setState({
+            keyword: text
+        })
+    }
+
+    search = (text) => {
+        return this.state.todoData.filter(item => {
+            if (item.label.toLowerCase().includes(text.toLowerCase())) {
+                return item
+            }
+        })
+    }
+
     render() {
+
+        let res = this.search(this.state.keyword)
 
         // данные для статусбара о количестве выполненых/оставшихся тикетах
         const alreadyDone = this.state.todoData.filter(item => item.done).length
@@ -109,13 +126,14 @@ class App extends React.Component {
                 <StatusBar
                     alreadyDone={ alreadyDone }
                     remained={ remained }/>
-                <SearchPanel />
+                <SearchPanel
+                    setKeyword={ this.setKeyword }/>
                 <StatusFilter />
 
-                <TodoList todoData={ this.state.todoData }
-                onDelete={ this.deleteItem }
-                onMarkDone={ this.markDone }
-                onMarkImportant={ this.markImportant }/>
+                <TodoList todoData={ res }
+                    onDelete={ this.deleteItem }
+                    onMarkDone={ this.markDone }
+                    onMarkImportant={ this.markImportant }/>
 
                 <AddItemForm addSomeItem={ this.addSomeItem }/>
 
