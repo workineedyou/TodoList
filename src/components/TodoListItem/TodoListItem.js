@@ -4,34 +4,12 @@ import './TodoListItem.css'
 
 class TodoListItem extends React.Component {
 
-    state = {
-        done: false,
-        important: false
-    }
-
-    onLabelClick = () => {
-
-        this.setState(prevState => {
-            return {
-                done: !prevState.done
-            }
-        })
-    }
-
-    markImportant = () => {
-        this.setState(prevState => {
-            return {
-                important: !prevState.important
-            }
-        })
-    }
-
     render() {
 
-        let classNames = 'pointer'
+        // DATA
+        const { label, onDelete, done, important, onMarkDone, onMarkImportant } = this.props
 
-        const { label, onDelete } = this.props
-        const { done, important } = this.state
+        let classNames = 'pointer'
 
         if (done) {
             classNames += ' line-through'
@@ -45,17 +23,16 @@ class TodoListItem extends React.Component {
             <div className="flexy">
                 <div
                     className={ classNames }
-                    onClick={ this.onLabelClick }>{ label }
+                    onClick={ onMarkDone }>{ label }
                 </div>
                 <div>
                     <button type="button" className="btn btn-outline-danger fa fa-trash-o mr-1"
-                    onClick={ onDelete }></button>
+                    onClick={ onDelete }> </button>
                     <button type="button" className="btn btn-outline-success fa fa-exclamation"
-                    onClick={ this.markImportant }></button>
+                    onClick={ onMarkImportant }> </button>
                 </div>
             </div>
         )
-
     }
 }
 
