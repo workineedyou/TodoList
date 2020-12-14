@@ -18,13 +18,13 @@ class App extends React.Component {
         ],
         isLoading: true,
         keyword: '',
-        filter: 'all'
+        filter: 'All'
     }
 
     // устанавливаем значение фильтра
-    setFilter = (e) => {
+    setFilter = (name) => {
         this.setState({
-            filter: e.target.name
+            filter: name
         })
     }
 
@@ -33,13 +33,13 @@ class App extends React.Component {
         const { filter } = this.state
 
         switch (filter) {
-            case 'all':
+            case 'All':
                 return this.state.todoData
                 break
-            case 'active':
+            case 'Active':
                 return this.state.todoData.filter(item => !item.done)
                 break
-            case 'done':
+            case 'Done':
                 return this.state.todoData.filter(item => item.done)
                 break
             default:
@@ -160,7 +160,8 @@ class App extends React.Component {
                 <SearchPanel
                     setKeyword={ this.setKeyword }/>
                 <StatusFilter
-                    setFilter={ this.setFilter }/>
+                    setFilter={ this.setFilter }
+                    filter={ this.state.filter }/>
 
                 <TodoList todoData={ result }
                     onDelete={ this.deleteItem }
