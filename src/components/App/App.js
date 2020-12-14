@@ -17,7 +17,34 @@ class App extends React.Component {
             { id: 3, label: 'Go to sleep', important: false, done: false },
         ],
         isLoading: true,
-        keyword: ''
+        keyword: '',
+        filter: 'all'
+    }
+
+    // устанавливаем значение фильтра
+    setFilter = (e) => {
+        this.setState({
+            filter: e.target.name
+        })
+    }
+
+    filtered = () => {
+
+        const { filter } = this.state
+
+        switch (filter) {
+            case 'all':
+                return this.state.todoData
+                break
+            case 'active':
+                return this.state.todoData.filter(item => !item.done)
+                break
+            case 'done':
+                return this.state.todoData.filter(item => item.done)
+                break
+            default:
+                return this.state.todoData
+        }
     }
 
     componentDidMount() {
@@ -27,7 +54,7 @@ class App extends React.Component {
             this.setState({
                 isLoading: false
             })
-        }, 300)
+        }, 500)
     }
 
     // random id
@@ -99,8 +126,8 @@ class App extends React.Component {
         })
     }
 
-    search = (text) => {
-        return this.state.todoData.filter(item => {
+    search = (text, arr) => {
+        return arr.filter(item => {
             if (item.label.toLowerCase().includes(text.toLowerCase())) {
                 return item
             }
@@ -109,14 +136,18 @@ class App extends React.Component {
 
     render() {
 
-        let res = this.search(this.state.keyword)
+        // фильтруем задачи по типу
+        let res = this.filtered()
+
+        // осуществляем поиск в отфильтрованном массиве
+        let result = this.search(this.state.keyword, res)
 
         // данные для статусбара о количестве выполненых/оставшихся тикетах
         const alreadyDone = this.state.todoData.filter(item => item.done).length
         const remained = this.state.todoData.length - alreadyDone
 
         if (this.state.isLoading) {
-            return <h1 className="wrapper">  LOADING ...  </h1>
+            return <h1 className="wrapper">  ЗАГРУЖАЕТСЯ ...  </h1>
         }
 
         return (
@@ -128,9 +159,10 @@ class App extends React.Component {
                     remained={ remained }/>
                 <SearchPanel
                     setKeyword={ this.setKeyword }/>
-                <StatusFilter />
+                <StatusFilter
+                    setFilter={ this.setFilter }/>
 
-                <TodoList todoData={ res }
+                <TodoList todoData={ result }
                     onDelete={ this.deleteItem }
                     onMarkDone={ this.markDone }
                     onMarkImportant={ this.markImportant }/>
